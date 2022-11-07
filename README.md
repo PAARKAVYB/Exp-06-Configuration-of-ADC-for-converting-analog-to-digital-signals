@@ -167,7 +167,7 @@ ADxDRy. E.g. AD0DR1 contains ADC result of channel 1 of ADC0.
 
 Figure -08 Circuit diagram of interfacing an POT with ADC input pin 
 
-# KIEL - PROGRAM: 
+# KEIL - PROGRAM: 
 ```
 NAME : PAARKAVY B
 REG NO : 212221230072
