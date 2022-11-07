@@ -1,20 +1,15 @@
-# Exp-06-Configuration-of-ADC-for-converting-analog-to-digital-signals
-
-
-## Name :	
-## Roll no:
-## Date of experiment : 
+# Exp 06 Configuration of ADC for converting analog to digital signals
   
-  
-## Aim: To configure internal ADC for   LPC2148 ARM 7 and write a code for displaying the values varying from 0v to 3.3v to its equivalent digital values 
-## Components required: Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
+# AIM:
+To configure internal ADC for   LPC2148 ARM 7 and write a code for displaying the values varying from 0v to 3.3v to its equivalent digital values 
+# COMPONENTS REQUIRED:
+Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
  
- ![image](https://user-images.githubusercontent.com/36288975/198947663-2d75f694-880a-4bc0-be67-8c2d4125fdb6.png)
+![image](https://user-images.githubusercontent.com/36288975/198947663-2d75f694-880a-4bc0-be67-8c2d4125fdb6.png)
 
 Figure-01 ADC pins in LPC2148 ARM 7 controller 
 
-
- ## Theory 
+# THEORY: 
 Analog to Digital Converter (ADC) is used to convert analog signal into digital form. LPC2148 has two inbuilt 10-bit ADC i.e. ADC0 & ADC1.
 •	ADC0 has 6 channels &ADC1 has 8 channels.
 •	Hence, we can connect 6 distinct types of input analog signals to ADC0 and 8 distinct types of input analog signals to ADC1.
@@ -31,15 +26,15 @@ These are the power and ground pins for ADC. These should be same as VDD & VSS.
 Let’s see the ADC registers which are used to control and monitors the ADC operation.
 Here, we will see ADC0 registers and their configurations. ADC1 has similar registers and can be configured in a similar manner.
  
-## ADC0 Registers 
+# ADC0 REGISTERS: 
 1.  AD0CR (ADC0 Control Register)
 •	AD0CR is a 32-bit register.
 •	This register must be written to select the operating mode before A/D conversion can occur.
 •	It is used for selecting channel of ADC, clock frequency for ADC, number of clocks or number of bits in result, start of conversion and few other parameters.
  
- ![image](https://user-images.githubusercontent.com/36288975/198947597-f7dfb87b-3dea-4b93-a0cd-dc214762f354.png)
+![image](https://user-images.githubusercontent.com/36288975/198947597-f7dfb87b-3dea-4b93-a0cd-dc214762f354.png)
 
- Figure-02 AD0CR (ADC0 Control Register)
+Figure-02 AD0CR (ADC0 Control Register)
 •	Bits 7:0 – SEL
 These bits select ADC0 channel as analog input. In software-controlled mode, only one of these bits should be 1.e.g. bit 7 (10000000) selects AD0.7 channel as analog input.
 •	Bits 15:8 – CLKDIV
@@ -84,7 +79,7 @@ This bit is significant only when the Start field contains 010-111. In these cas
 •	AD0GDR is a 32-bit register.
 •	This register contains the ADC’s DONE bit and the result of the most recent A/D conversion.
  
- ![image](https://user-images.githubusercontent.com/36288975/198947519-3a019070-02b1-413f-af08-4536c367981d.png)
+![image](https://user-images.githubusercontent.com/36288975/198947519-3a019070-02b1-413f-af08-4536c367981d.png)
 
 Figure-03 AD0GDR (ADC0 Global Data Register)
 •	Bit 5:0 – RESERVED
@@ -106,9 +101,9 @@ If AD0CR is written while a conversion is still in progress, this bit is set and
 •	ADGSR is a 32-bit register.
 •	Software can write to this register to simultaneously start conversions on both ADC.
 
- ![image](https://user-images.githubusercontent.com/36288975/198947463-02050b1b-139a-46a3-b264-e07704f462bc.png)
+![image](https://user-images.githubusercontent.com/36288975/198947463-02050b1b-139a-46a3-b264-e07704f462bc.png)
 
-  Figure-04 ADGSR (A/D Global Start Register)
+Figure-04 ADGSR (A/D Global Start Register)
 •	BURST (Bit 16), START (Bit <26:24>) & EDGE (Bit 27)
 These bits have same function as in the individual ADC control registers i.e. AD0CR & AD1CR. Only difference is that we can use these function for both ADC commonly from this register.
  
@@ -118,7 +113,7 @@ These bits have same function as in the individual ADC control registers i.e. AD
 
 ![image](https://user-images.githubusercontent.com/36288975/198947435-c0d0d558-615b-4f1b-8d29-5ea985e02231.png)
 
-  Figure-05 AD0STAT (ADC0 Status Register)
+Figure-05 AD0STAT (ADC0 Status Register)
 •	Bit 7:0 – DONE7:DONE0
 These bits reflect the DONE status flag from the result registers for A/D channel 7 - channel 0.
 •	Bit 15:8 – OVERRUN7:OVERRUN0
@@ -131,10 +126,9 @@ This bit is 1 when any of the individual A/D channel DONE flags is asserted and 
 •	AD0INTEN is a 32-bit register.
 •	It allows control over which channels generate an interrupt when conversion is completed.
 
-
 ![image](https://user-images.githubusercontent.com/36288975/198947409-b9335191-fd9e-45c3-9d23-820e3df72488.png)
 
-  Figure-06 AD0INTEN (ADC0 Interrupt Enable)
+Figure-06 AD0INTEN (ADC0 Interrupt Enable)
 •	Bit 0 – ADINTEN0
 0 = Completion of a A/D conversion on ADC channel 0 will not generate an interrupt
 1 = Completion of a conversion on ADC channel 0 will generate an interrupt
@@ -148,10 +142,9 @@ This bit is 1 when any of the individual A/D channel DONE flags is asserted and 
 •	They hold the result when A/D conversion is completed.
 •	They also include flags that indicate when a conversion has been completed and when a conversion overrun has occurred.
 
-
 ![image](https://user-images.githubusercontent.com/36288975/198947370-c2a27bb7-d2f7-47eb-8184-1bdeae95511d.png)
 
-  Figure-07 AD0 Data Registers Structure
+Figure-07 AD0 Data Registers Structure
 •	Bit 5:0 – RESERVED
 •	Bits 15:6 – RESULT
 When DONE bit is set to 1, this field contains 10-bit ADC result that has a value in the range of 0 (less than or equal to VSSA) to 1023 (greater than or equal to VREF).
@@ -162,9 +155,7 @@ This bit is cleared by reading this register.
 •	Bit 31 – DONE
 This bit is set to 1 when an A/D conversion completes. It is cleared when this register is read.
  
-
-
-Procedure:
+# PROCEDURE:
 Steps for Analog to Digital Conversion
 1.	Configure the ADxCR (ADC Control Register) according to the need of application.
 2.	Start ADC conversion by writing appropriate value to START bits in ADxCR. (Example, writing 001 to START bits of the register 26:24, conversion is started immediately).
@@ -172,37 +163,62 @@ Steps for Analog to Digital Conversion
 4.	Read the ADC result from the corresponding ADC Data Register.
 ADxDRy. E.g. AD0DR1 contains ADC result of channel 1 of ADC0.
 
- ![image](https://user-images.githubusercontent.com/36288975/198947241-e5190f5c-0a23-4026-ae2c-722c43e51e6c.png)
+![image](https://user-images.githubusercontent.com/36288975/198947241-e5190f5c-0a23-4026-ae2c-722c43e51e6c.png)
 
 Figure -08 Circuit diagram of interfacing an POT with ADC input pin 
 
-## Kiel - Program 
- 
-## Tabulations and graph 
+# KIEL - PROGRAM: 
+```
+NAME : PAARKAVY B
+REG NO : 212221230072
+```
+
+```
+#include <lpc214x.h>
+#include "LCD.h"
+#include "ADC.h"
+unsigned int val;
+
+int main()
+{
+    IO1DIR=0xffffffff;
+    IO0DIR=0x00000000;
+    PINSEL0=0x0300;
+    VPBDIV=0x02;
+    lcd_init();
+    show("ADC Value : ");
+    while(1) {
+        cmd(0x8b);
+        val=adc(0,6);
+        dat((val/1000)+48);
+        dat(((val/100)%10)+48);
+        dat(((val/10)%10)+48);
+        dat((val%10)+48);
+
+    }
+}
+```
+
+# TABULATION AND GRAPH: 
 SL NO	% OF POT VALUE	ADC VALUE
-1		
-2		
-3		
-4		
-5		
-6		
-7		
-8		
-9		
-10		
+![output](op1.png)
 
- ![image](https://user-images.githubusercontent.com/36288975/198947184-dbccf4b1-10a1-4090-a670-93526ed6e597.png)
-
-
-
- 
+![image](https://user-images.githubusercontent.com/36288975/198947184-dbccf4b1-10a1-4090-a670-93526ed6e597.png)
 Figure -09 graph between % of pot(1Kohm) values and ADC 
 
+# OUTPUT:
+# BEFORE SIMULATION:
+![output](op2.jpg)
 
-Result :
-Configuring an ADC and the input values are displayed on LCD screen 
+# AFTER SIMULATION:
+![output](op3.jpg)
 
-Output screen shots :
+# CIRCUIT DIAGRAM:
+![output](op4.png)
+
+# RESULT:
+Configuring an ADC and the input values are displayed on LCD screen. 
+
 
 
 
